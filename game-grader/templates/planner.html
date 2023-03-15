@@ -1,0 +1,337 @@
+{% extends "base.html" %}
+{% load static %}
+{% block staticcss %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tagify/3.14.3/tagify.css"
+    integrity="sha512-X5fWtpYG9gzu0ACyXMuZ1gRu2akvZAYUReB0R/+GENYgfupzS1igi+dqcs8ASA0USe+LuxE9HP5KSQn1hjRpfg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+    integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+    integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link href="{% static 'css/planner1.css' %}" rel="stylesheet" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
+{% endblock staticcss %}
+{% block content %}
+<div class="w-full">
+    <div class="text-white text-4xl pl-8">Planner
+    </div>
+    <div class="rounded ml-8 mt-4 bg-slate-800">
+        <div class="flex m-6 p-6 border-b-2 border-gray-700">
+            <nav class="text-slate-500 text-xl w-6/12 flex justify-start space-x-4 m-3">
+                <button class='hover:bg-slate-700 p-2 rounded'>All</button>
+                <button class='hover:bg-slate-700 p-2 rounded'>Pre-Season</button>
+                <button class='hover:bg-slate-700 p-2 rounded'>In-Season</button>
+                <button class='hover:bg-slate-700 p-2 rounded'>Post-Season</button>
+            </nav>
+            <div class="items-center w-full flex justify-end">
+                <select name="cars" id="cars" class="w-1/5 h-10 text-slate-500 hover:bg-slate-700 rounded-lg bg-slate-800 border border-gray-600 p-1">
+                    <option value="volvo" class="p-2">Best Sellers</option>
+                </select>
+            </div>
+        </div>
+        <div class="m-6">
+            <div class="text-white p-3">Viewing 5 Seasons</div>
+        </div>
+        <div class="m-6">
+            <div class="flex text-white pl-3">
+                <div
+                    class="bg-indigo-300 sm:w-20 sm:h-20 sm:text-2xl sm:p-2  lg:w-20 lg:h-20 lg:text-3xl lg:p-2  xl:w-24 xl:h-24 xl:text-4xl xl:p-3  2xl:w-32 2xl:h-32 2xl:text-5xl rounded-full font-serif font-medium text-black  text-center">
+                    <span class="w-full">23-24
+                    </span>
+                </div>
+                <div class="w-9/12 ml-5">
+                    <div class="sm:text-2xl m-2 lg:text-3xl xl:text-4xl 2xl:text-5xl text-white">
+                        2023-2024
+                    </div>
+                    <div class="m-2 sm:text-lg  lg:text-xl xl:text-2xl  2xl:text-3xl">
+                        <span class="">{{eventlen}} Events</span>
+                        {% comment %} <span class="ml-28">451 Followers</span> {% endcomment %}
+                    </div>
+                </div>
+                <div class="w-1/5 items-center flex mr-2">
+                    <a href="{% url 'new_event' %}"><button
+                        class="bg-blue-500 w-25 h-20 mr-2 rounded-lg border-2 border-slate-400 p-2 ">
+                        + Create An Event Folder
+                    </button></a>
+                    <button class="w-25 h-20 mr-2 rounded-lg border-2 border-slate-400 p-2 ">
+                        Edit Seasons Details
+                    </button>
+                </div>
+            </div>
+
+            <div id="year_23_24" class="owl-carousel owl-theme p-4 border-gray-700 pb-16">
+                {% if events %}
+                {% for ev in events %}
+                <div class="item flex relative">
+                    <button type="submit" onclick="getevent({{ev.id}})" class="w-96">
+                        <div id="year_23_24_event_1" class="div1img h-56 rounded-3xl object-cover bg-slate-500" rel="#div1_23_24" >
+
+                        </div>
+                    </button>
+                    <span
+                        class="absolute lg:text-3xl xl:text-4xl w-full p-3 text-center  mt-32 text-5xl text-white">{{ev.plantitle}}</span>
+                    <span class="hoverIcon"><i class="fa-solid fa-circle-arrow-up fa-3x text-white"></i></span>
+                </div>
+                {% endfor %}
+                {% else %}  
+                <div>
+                    <div colspan="8" class="text-center text-4xl text-white">
+                        No Record Found
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div id="div1_23_24" class="hidden">
+            <div class="m-6 border-gray-700">
+                <div class="flex justify-between pb-8">
+                    <div class="flex w-1/4">
+                        <div class="bg-blue-600 w-4 h-8 rounded "></div>
+                        <div id="planname_heading" class="text-white text-3xl ml-12 md:text-lg xl:text-xl 2xl:text-2xl">2023-2024 Spring Ball Plans </div>
+                    </div>
+                    <div class="w-2/4 relative flex items-center">
+                        <i class="fa-solid fa-magnifying-glass fa-xl ml-3 absolute text-slate-700"></i>
+                        <input type="text" placeholder="Search or type command" class="bg-slate-500 text-white text-sm rounded-lg pl-12 p-2 w-3/5" />
+                    </div>
+                    <div class="text-white text-lg w-24 justify-items-center">
+                        <span class="bg-slate-500 w-24 p-1 rounded px-5 py-1">Plans</span>
+                    </div>
+                    <div class="text-white text-lg">
+                        Scripts
+                    </div>
+                    <div class="justify-center w-24 ">
+                        <i class="fa-solid fa-filter fa-xl text-slate-500 border  rounded border-slate-500 px-2 py-1 "></i>
+                    </div>
+                </div>
+                <div id="plandiv" class="w-full flex">
+                    <div class="flex  w-1/4 ">
+                        <div class="flex  mb-4 bg-gray-700 mr-5 h-5">
+                            <input id="default-checkbox" type="checkbox"
+                            class="w-5 h-5 text-gray-600 float-right bg-gray-700 border border-gray-500 rounded"
+                            x-data="{ open: false }" @click="open = !open"
+                            :class="{'' : open, 'appearance-none' : !open}">
+                        </div>
+                        <div class="text-slate-500 text-lg justify-start w-3/4"> 
+                            Plan Name
+                        </div>
+
+                    </div>
+                    <div class="flex text-slate-500 text-lg w-3/4 justify-between">
+                        <div class="w-full text-center">Status</div>
+                        <div class="w-full text-center">Start Time</div>
+                        <div class="w-full text-center">Duration</div>
+                        <div class="w-full text-center">Periods</div>
+                        <div class="w-full text-center">Scripts</div>
+                        <div class="w-full text-center">Shared With</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="noEvent" hidden>
+            <div colspan="8" class="text-center text-4xl text-white pb-8">
+                No Record Found
+            </div>
+        </div>
+
+
+</div>
+
+</div>
+
+{% endblock content %}
+
+{% block staticjs %}
+<script>
+    function getevent(e) {
+        //console.log(e)
+        const elements = document.getElementsByClassName("eventlist");
+        if (elements) {
+            while (elements.length > 0) {
+                elements[0].parentNode.removeChild(elements[0]);
+            }
+        }
+        data = {
+            "id": e,
+        }
+        $.post("/planner/", data, function (res, status) {
+            var resonse = res;
+            if (resonse.length > 0)
+            {
+                $("#noEvent").hide();
+                for (let i = 0; i < res.length; i++) {
+                    document.getElementById("planname_heading").innerHTML = res[i]["evetobj"];
+                    var plan_Status = res[i]["plantype"];
+                    console.log(res[i]["plantype"])
+                    if(plan_Status == "Practice Plan")
+                        {
+                            var ampm = res[i]["starttime"].split(":")[0] >= 12 ? 'pm' : 'am';
+                            var hour = res[i]["starttime"].split(":")[0]>12 ? res[i]["starttime"].split(":")[0] % 12 : res[i]["starttime"].split(":")[0];
+                            document.getElementById("div1_23_24").innerHTML +=
+                            `<div class="m-6 border-gray-700 pb-6 eventlist">
+                                <div class="eventdetails w-full flex pt-3 pb-3">
+                                    <div class="flex  w-1/4">
+                                        <div class="flex bg-gray-700 mr-5 h-5">
+                                            <input id="default-checkbox" type="checkbox"
+                                            class="w-5 h-5 text-gray-600 float-right bg-gray-700 border border-gray-500 rounded"x-data="{ open: false }" @click="open = !open"
+                                            :class="{'' : open, 'appearance-none' : !open}"
+                                            >
+                                        </div>
+                                        <div class="flex w-full">
+                                            <a href="/monday/${res[i]["planid"]}"><div class="w-full">
+                                                <img src="{% static 'img/practice_icon.png' %}" alt=""
+                                                class="object-cover rounded-lg h-36 w-40"></a>
+                                            </div>
+                                            <div class="w-full ml-5 text-white text-lg">
+                                                <div class="font-semibold" id="plan_name" value="">${res[i]["planname"]}</div>
+                                                <div id="plan_date" value="">${res[i]["date"]}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="w-3/4 ">
+                                        <div class="flex text-white text-lg  justify-between pt-4">
+                                        
+                                            <div class="w-full text-center text-green-600">
+                                                <span class="bg-green-600 bg-opacity-20 px-5 py-1 rounded">${res[i]["status"]}</span> 
+                                            </div>
+                                        
+                                            <div class="w-full text-center" id="start_time" value="">${hour}:${res[i]["starttime"].split(":")[1]} ${ampm}</div>
+                                            <div class="w-full text-center"><span class="bg-slate-500 px-5 py-1 rounded" value="" id="plan_duration">${res[i]["duration"]}</span></div>
+                                            <div class="w-full text-center">14</div>
+                                            <div class="w-full text-center"><span class="bg-slate-500 px-5 py-1 rounded">1</span></div>
+                                            <div class="w-full text-center"><span class="bg-slate-500 px-5 py-1 rounded">Team<span></div>
+                                    </div>
+                                    <div class="icons_div flex text-white text-lg w-96 ml-24 mt-16">
+                                            <div class="w-40"><i class="fa-solid fa-pencil fa-xl bg-gray-700 p-3 rounded-full"></i></div>
+                                            <div class="w-40"><i class="fa-solid fa-message fa-xl bg-gray-700 p-3 rounded-full"></i></div>
+                                            <div class="w-40"><i class="fa-solid fa-ellipsis fa-xl bg-gray-700 p-3 rounded-full"></i></div>
+                                    </div>
+                                    </div>  
+                                </div>
+                            </div>`
+                        }
+                    else if(plan_Status == "Meeting Plan")
+                    {
+                        var ampm = res[i]["starttime"].split(":")[0] >= 12 ? 'pm' : 'am';
+                        var hour = res[i]["starttime"].split(":")[0]>12 ? res[i]["starttime"].split(":")[0] % 12 : res[i]["starttime"].split(":")[0];
+                        document.getElementById("div1_23_24").innerHTML +=
+                        `<div class="m-6 border-gray-700 pb-6 eventlist">
+                            <div class="eventdetails w-full flex pt-3 pb-3">
+                                <div class="flex  w-1/4">
+                                    <div class="flex bg-gray-700 mr-5 h-5">
+                                        <input id="default-checkbox" type="checkbox"
+                                        class="w-5 h-5 text-gray-600 float-right bg-gray-700 border border-gray-500 rounded" x-data="{ open: false }" @click="open = !open"
+                                :class="{'' : open, 'appearance-none' : !open}">
+                                    </div>
+                                    <div class="flex w-full">
+                                        <a href="/monday/${res[i]["planid"]}"><div class="w-full">
+                                            <img src="{% static 'img/meeting_icon.png' %}" alt=""
+                                            class="object-cover rounded-lg h-36 w-40"></a>
+                                        </div>
+                                        <div class="w-full ml-5 text-white text-lg">
+                                            <div class="font-semibold" id="plan_name" value="">${res[i]["planname"]}</div>
+                                            <div id="plan_date" value="">${res[i]["date"]}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-3/4 ">
+                                    <div class="flex text-white text-lg  justify-between pt-4">
+                                    
+                                        <div class="w-full text-center text-green-600">
+                                            <span class="bg-green-600 bg-opacity-20 px-5 py-1 rounded">${res[i]["status"]}</span> 
+                                        </div>
+                                    
+                                        <div class="w-full text-center" id="start_time" value="">${hour}:${res[i]["starttime"].split(":")[1]} ${ampm}</div>
+                                        <div class="w-full text-center"><span class="bg-slate-500 px-5 py-1 rounded" value="" id="plan_duration">${res[i]["duration"]}</span></div>
+                                        <div class="w-full text-center">14</div>
+                                        <div class="w-full text-center"><span class="bg-slate-500 px-5 py-1 rounded">1</span></div>
+                                        <div class="w-full text-center"><span class="bg-slate-500 px-5 py-1 rounded">Team<span></div>
+                                </div>
+                                <div class="icons_div flex text-white text-lg w-96 ml-24 mt-16">
+                                        <div class="w-40"><i class="fa-solid fa-pencil fa-xl bg-gray-700 p-3 rounded-full"></i></div>
+                                        <div class="w-40"><i class="fa-solid fa-message fa-xl bg-gray-700 p-3 rounded-full"></i></div>
+                                        <div class="w-40"><i class="fa-solid fa-ellipsis fa-xl bg-gray-700 p-3 rounded-full"></i></div>
+                                </div>
+                                </div>  
+                            </div>
+                        </div>`
+                    }
+                    else
+                    {
+                        var ampm = res[i]["starttime"].split(":")[0] >= 12 ? 'pm' : 'am';
+                        var hour = res[i]["starttime"].split(":")[0]>12 ? res[i]["starttime"].split(":")[0] % 12 : res[i]["starttime"].split(":")[0];
+                        document.getElementById("div1_23_24").innerHTML +=
+                        `<div class="m-6 border-gray-700 pb-6 eventlist">
+                            <div class="eventdetails w-full flex pt-3 pb-3">
+                                <div class="flex  w-1/4">
+                                    <div class="flex bg-gray-700 mr-5 h-5">
+                                        <input id="default-checkbox" type="checkbox"
+                                        class="w-5 h-5 text-gray-600 float-right bg-gray-700 border border-gray-500 rounded" x-data="{ open: false }" @click="open = !open"
+                                        :class="{'' : open, 'appearance-none' : !open}">
+                                    </div>
+                                    <div class="flex w-full">
+                                        <a href="/monday/${res[i]["planid"]}"><div class="w-full">
+                                            <img src="{% static 'img/workout_icon.png' %}" alt=""
+                                            class="object-cover rounded-lg h-36 w-40"></a>
+                                        </div>
+                                        <div class="w-full ml-5 text-white text-lg">
+                                            <div class="font-semibold" id="plan_name" value="">${res[i]["planname"]}</div>
+                                            <div id="plan_date" value="">${res[i]["date"]}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-3/4 ">
+                                    <div class="flex text-white text-lg  justify-between pt-4">
+                                    
+                                        <div class="w-full text-center text-green-600">
+                                            <span class="bg-green-600 bg-opacity-20 px-5 py-1 rounded">${res[i]["status"]}</span> 
+                                        </div>
+                                    
+                                        <div class="w-full text-center" id="start_time" value="">${hour}:${res[i]["starttime"].split(":")[1]} ${ampm}</div>
+                                        <div class="w-full text-center"><span class="bg-slate-500 px-5 py-1 rounded" value="" id="plan_duration">${res[i]["duration"]}</span></div>
+                                        <div class="w-full text-center">14</div>
+                                        <div class="w-full text-center"><span class="bg-slate-500 px-5 py-1 rounded">1</span></div>
+                                        <div class="w-full text-center"><span class="bg-slate-500 px-5 py-1 rounded">Team<span></div>
+                                </div>
+                                <div class="icons_div flex text-white text-lg w-96 ml-24 mt-16">
+                                        <div class="w-40"><i class="fa-solid fa-pencil fa-xl bg-gray-700 p-3 rounded-full"></i></div>
+                                        <div class="w-40"><i class="fa-solid fa-message fa-xl bg-gray-700 p-3 rounded-full"></i></div>
+                                        <div class="w-40"><i class="fa-solid fa-ellipsis fa-xl bg-gray-700 p-3 rounded-full"></i></div>
+                                </div>
+                                </div>  
+                            </div>
+                        </div>`   
+                    }
+                }
+            }
+            else{
+                $("#plandiv").hide();
+                $("#noEvent").show();
+            }
+        });
+    }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous"></script>
+<!-- Owl Carousel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+    integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="{% static 'js/planner1.js' %}"></script>
+
+
+
+{% endblock staticjs %}

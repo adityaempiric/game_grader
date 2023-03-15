@@ -1,0 +1,145 @@
+{% block sidebar %}
+<aside id="collapseDiv" class="bg-slate-800 w-24" hidden>
+    <div class="m-4 h-5/6">
+        {% comment %} <div class="text-white text-8xl">G</div> {% endcomment %}
+        <div class="p-3 text-white">
+            <a href="{% url 'home' %}" class="text-white hover:text-cyan-400 side-nav-group">
+                <i class="fa-solid fa-house text-2xl"></i>
+            </a>
+        </div>
+        <div id="1abc">
+            <div id="plannerDiv"class="p-3 text-white" >
+                <a href="{% url 'planner' %}" id="planner_div" class="hover:text-cyan-400 text-white side-nav-group">
+                    <i class="fa-solid fa-list text-2xl"></i>
+                </a>
+            </div>
+            <div id="planner1" class="w-36 bg-slate-800 ml-10 hover:text-cyan-400 text-white side-nav-group opacity-90 hidden">
+                <a href="#" class="hover:text-cyan-400 text-white side-nav-group">
+                    <p id="calendar" class="p-2">Calendar</p>
+                </a>
+                <a href="#" class="hover:text-cyan-400 text-white side-nav-group">
+                    <p id="thisweek" class="p-2 flex w-full ">
+                        <span class="w-full">This Week</span>
+                        <span class="mr-4 bg-green-300 rounded text-black pl-1 pr-1">
+                            5
+                        </span>
+                    </p>
+                </a>
+                <a href="#" class="hover:text-cyan-400 text-white side-nav-group">
+                    <p id="released" class="p-2">Released</p>
+                </a>
+                <a href="#" class="hover:text-cyan-400 text-white side-nav-group">
+                    <p id="draft" class="p-2">Draft</p>
+                </a>
+            </div>
+        </div>
+        <div class="p-3 text-white">
+            <a href="{% url 'manage_team' %}" class="hover:text-cyan-400 text-white side-nav-group">
+                <i class="fa-solid fa-user-group text-2xl"></i>
+            </a>
+        </div>
+        <div class="p-3 text-white">
+            <a href="#" class="hover:text-cyan-400 text-white side-nav-group">
+                <i class="fa fa-pen-to-square text-2xl"></i>
+            </a>
+        </div>
+    </div>
+    <div class="m-4 text-white h-14">
+        <button id="openasidebar" class="mt-14 w-full">
+            <i class="fa-solid fa-arrow-right text-white text-2xl" ></i>
+        </button>
+    </div>
+    
+</aside>
+
+<aside id="expandDiv" class="w-72 overflow-y-auto content-between  grid-cols-1 bg-slate-800 " hidden >
+    <div id="aside2Div"class="h-5/6 mt-5">
+        <a id="home1"href="{% url 'home' %}" class="aside2Divurl p-2 flex text-white hover:text-cyan-400 side-nav-group">
+            <span>
+                <i class="fa-solid fa-house text-2xl"></i>
+            </span>
+            <p class="ml-4 ">
+                Home
+            </p>
+        </a>
+        <a href="{% url 'planner' %}" id="planner_div1" class="aside2Divurl hover:text-cyan-400 text-white side-nav-group">
+            <div class="flex p-2">
+                <div>
+                    <span>
+                        <i class="fa-solid fa-list text-2xl"></i>
+                    </span>
+                </div>
+                <p class="ml-4">
+                    <span>
+                       Planner
+                    </span>
+                </p>
+            </div>
+        </a>
+        <div id="planner" class="ml-10 hover:text-cyan-400 text-white side-nav-group hidden">
+            <a href="#" class="aside2Divurl hover:text-cyan-400 text-white side-nav-group">
+                <p id="calendar" class="p-2">Calendar</p>
+            </a>
+            <a href="#" class="aside2Divurl hover:text-cyan-400 text-white side-nav-group">
+                <p id="thisweek" class="p-2 flex w-full">
+                    <span class="w-full">This Week</span>
+                    <span class="mr-4 bg-green-300 rounded text-black  pl-1 pr-1">
+                        5
+                    </span>
+                </p>
+            </a>
+            <a href="#" class="aside2Divurl hover:text-cyan-400 text-white side-nav-group">
+                <p id="released" class="p-2">Released</p>
+            </a>
+            <a href="#" class="aside2Divurl hover:text-cyan-400 text-white side-nav-group">
+                <p id="draft" class="p-2">Draft</p>
+            </a>
+        </div>
+        <a href="{% url 'manage_team' %}" class="aside2Divurl p-2 flex hover:text-cyan-400 text-white side-nav-group">
+            <div>
+                <span>
+                    <i class="fa-solid fa-user-group"></i>
+                </span>
+            </div>
+            <p class="ml-4 flex w-full">
+                <span class="w-full">
+                    Manage Team
+                </span>
+                {% if team_member %}
+                <span class="mr-4 bg-green-300 rounded text-black  pl-1 pr-1">
+                    {{team_member}}
+                </span>
+                {%else %}
+                <span class="mr-4 bg-green-300 rounded text-black  pl-1 pr-1">
+                   0
+                </span>
+                {% endif %}
+            </p>
+        </a>
+        <a href="#" class="aside2Divurl p-2 flex hover:text-cyan-400 text-white side-nav-group">
+            <span>
+                <i class="fa fa-pen-to-square text-2xl"></i>
+            </span>
+            <p class="ml-4">
+                Position Editor
+            </p>
+        </a>
+        <!-- <a href="/clock/" class="p-2 flex hover:text-cyan-400 text-white side-nav-group">
+            <span>
+                <i class="fa-solid fa-clock text-2xl"></i>
+            </span>
+            <p class="ml-4">
+                Clock
+            </p>
+        </a> -->
+    </div>
+    <div class="flex justify-end m-4 h-12"> 
+        <button id="collapse_sidebar" class="mt-8">
+            <i class="fa-solid fa-arrow-left text-white text-2xl"></i>
+        </button>
+        <hr class=>
+
+    </div>
+</aside>
+
+{% endblock sidebar %}

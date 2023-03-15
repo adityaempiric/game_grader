@@ -1,0 +1,118 @@
+{% extends "base.html" %} {% load static %} {% block title %}Clock{% endblock %}
+{% block staticcss %}
+<link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+<!-- <link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+  crossorigin="anonymous"
+/> -->
+<link rel="stylesheet" href="{% static 'css/clock.css' %}" />
+<link rel="stylesheet" href="{% static 'fontawesome/css/fontawesome.min.css' %}" />
+<link rel="stylesheet" href="{% static 'fontawesome/css/solid.min.css' %}" />
+{% endblock staticcss %}
+{% block content %}
+<div id="main" class="main w-full bg-dark-1 flex flex-col">
+    <nav class="flex clock-nav p-4 navbar navbar-expand-lg navbar-dark bg-dark-2 justify-between">
+        <div class="flex items-center">
+            <button id="backward" class="text-white flex align-center"><i
+                    class="fas fa-angle-left text-white text-3xl"></i>Back</button>
+            {% if user.role == 'Admin' or user.role == 'admin' %}
+            <div class="ml-8">
+                <button id="start-btn" class="btn btn-action mx-3 p-4 text-white">Start</button>
+            </div>
+            {% endif %}
+        </div>
+        <div>
+            <span class="navbar-brand text-white" href="#">
+                <span class="app-name">Team</span>Leaderboard</span>
+        </div>
+    </nav>
+    <div class="px-16 py-4">
+        <div class="timer-wrapper bg-dark-3 rounded-xs">
+            <div class="text-white text-center text-34 pt-4">
+                <span id="current">0</span> of <span id="total">0</span>
+            </div>
+            <div class="timer">
+                <div id="time-left" class="leading-tight">00:00</div>
+            </div>
+            <div class="row justify-content-center">
+                <p id="name" class="pb-4 text-center" style="font-size: 48pt">Training</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-column flex-1 px-16 py-4">
+        {% if is_admin %}
+        <form
+            class="flex items-center justify-center form-inline my-2 my-lg-0 w-full timer-player bg-dark-3 rounded-xs py-8">
+            <div class="flex flex-col items-center">
+                <p class="text-xs text-white py-1">PREVIOUS PERIOD</p>
+                <button class="btn-navigation rounded-lg" id="prev-btn" disabled>
+                    <i class="fas fa-angle-left"></i>
+                </button>
+                <p class="text-xs text-white py-1" id="down-prev">PREVIOUS TRAINING</p>
+            </div>
+            <button class="btn btn-link btn-action rounded-lg p-8" disabled id="timer-plus" role="plusTimer">
+                +0:30
+            </button>
+            <div class="flex flex-col items-center">
+                <p class="text-xs text-white py-1">NEXT PERIOD</p>
+                <button class="btn-navigation rounded-lg" id="next-btn" disabled>
+                    <i class="fas fa-angle-right"></i>
+                </button>
+                <p class="text-xs text-white py-1" id="up-next">NEXT TRAINING</p>
+            </div>
+        </form>
+        {% else %}<form
+            class="flex items-center justify-center form-inline my-2 my-lg-0 w-full timer-player bg-dark-3 rounded-xs py-8">
+            <div class="flex flex-col items-center">
+                <p class="text-xs text-white py-1">PREVIOUS PERIOD</p>
+                <button class="btn-navigation rounded-lg" id="prev-btn" disabled>
+                    <i class="fas fa-angle-left"></i>
+                </button>
+                <p class="text-xs text-white py-1" id="down-prev">PREVIOUS TRAINING</p>
+            </div>
+            <button class="btn btn-link btn-action rounded-lg p-8" disabled id="timer-plus" role="plusTimer">
+                +0:30
+            </button>
+            <div class="flex flex-col items-center">
+                <p class="text-xs text-white py-1">NEXT PERIOD</p>
+                <button class="btn-navigation rounded-lg" id="next-btn" disabled>
+                    <i class="fas fa-angle-right"></i>
+                </button>
+                <p class="text-xs text-white py-1" id="up-next">NEXT TRAINING</p>
+            </div>
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
+{% block staticjs %}
+<script>
+    var id = "{{id}}";
+    var is_admin = "{{ is_admin }}" === "True" ? true : false;
+    var user = "{{ user }}";
+    var plan = "{{ plan }}";
+    var res = JSON.parse(plan.replace(/&#x27;/g, '"'));
+    console.log(res);
+</script>
+<script type="text/javascript" src='{% static "clock/js/reconnecting-websocket.min.js" %}'></script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://unpkg.com/@reactivex/rxjs@6.5.2/dist/global/rxjs.umd.js"></script>
+
+<script type="text/javascript" src="{% static 'img/gifs/training.js' %}"></script>
+<script type="text/javascript" src="{% static 'img/gifs/traveling.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/timer.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/clock.js' %}"></script>
+{% endblock staticjs %}

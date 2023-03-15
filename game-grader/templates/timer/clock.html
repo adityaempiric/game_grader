@@ -1,0 +1,59 @@
+{% extends "timer_base.html" %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+{% block staticcss %}
+<link href="{% static 'css/home.css' %}" rel="stylesheet" type="text/css">
+{% endblock staticcss %}
+
+{% block content %}
+<div class="w-full">
+    <div class=" flex m-5 p-1  py-5 items-center">
+        <div class="text-2xl text-white"> 
+            <button onclick="history.back()">
+                <i class="fa-solid fa-chevron-left text-2xl"></i>
+                Back 
+            </button>
+        </div>
+        <div class="text-2xl text-white ml-5">
+            <button id='startClock' class="bg-blue-600 p-3 w-32 font-medium rounded-lg" onclick="startEvent()">Start</button>
+        </div>
+    </div>
+    <div id ="task" class="bg-slate-800 text-center text-white m-5 rounded-lg">
+        <div class="text-4xl p-5" id="task-list">0 of 0</div>
+        <div  class="text-9xl p-5 " id="timer">00:00:00</div>
+        <div class="text-4xl p-5">Training</div>
+    </div>
+    <div class="flex flex-column justify-around m-5 bg-slate-800 rounded-lg py-16" >
+        <div class="text-white  p-5 flex flex-col items-center">
+            <span class="text-xs">PREVIOUS PERIOD</span>
+            <button onclick='prePlay()' class="bg-blue-600 p-5 w-24 rounded-lg">
+                <i class="fa-solid fa-angle-left text-5xl"></i>
+            </button>
+            <span class="text-xs">PREVIOUS TRAINING</span>
+        </div>
+        <div class="text-white p-5  font-bold flex flex-col items-center ">
+            <button class="bg-blue-600 p-5 text-6xl w-60 rounded-lg" onclick='addTime()'>
+                +0 : 30
+            </button>
+            <audio controls id="one_min_alert" src="/static/sound/one_min_alert.mp3" type="audio/mp3" hidden>
+            </audio>
+            <audio controls id="period_end_horn" src="/static/sound/notification.mp3" type="audio/mp3" hidden>
+            </audio> 
+        </div>
+        <div class="text-white p-5 flex flex-col items-center">
+            <span class="text-xs">NEXT PERIOD</span>
+            <button id ="next_period" class="NEXTPERIOD bg-blue-600 p-5 w-24 rounded-lg" onclick="nextplay()">
+                <i class="fa-solid fa-angle-right text-5xl"></i>
+            </button>
+            <span class="text-xs">NEXT TRAINING</span>
+        </div>
+
+        {% comment %} <input  id='timing_inp' value='0' /> {% endcomment %}
+    </div>
+</div>
+{% endblock content %}
+
+{% block staticjs %}
+<script src="{% static 'js/home.js' %}"></script>
+<script src="{% static 'js/page/clock.js' %}"></script>
+{% endblock staticjs %}

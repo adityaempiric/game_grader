@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game-Grader | {% block title %}{% endblock title %}</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'img/BlueLogo.png' %}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+
+    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    {% block staticcss %}
+    {% endblock staticcss %}
+    <link href="{% static 'css/sidebar.css' %}" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="{% static 'css/app.css' %}" rel="stylesheet" type="text/css">
+
+    <script>
+        var plugin = window.tailwind.plugin
+        tailwind.config = {
+            plugins: [
+                plugin(function ({ addUtilities }) {
+                addUtilities({
+                    '.scrollbar-hide': {
+                    /* IE and Edge */
+                    '-ms-overflow-style': 'none',
+
+                    /* Firefox */
+                    'scrollbar-width': 'none',
+
+                    /* Safari and Chrome */
+                    '&::-webkit-scrollbar': {
+                        display: 'none'
+                    }
+                    }
+                }
+                )
+                })
+            ]
+        }
+    </script>
+</head>
+
+<body class="bg-gray-700 scrollbar-hide">
+
+    <div class="flex flex-col h-screen">
+        {% block header %}
+            {% include "header.html" %}
+        {% endblock header %}
+        <div class="flex flex-1 overflow-hidden">
+            {% block sidebar %}
+                {% include "sidebar.html" %}
+            {% endblock sidebar %}
+
+            <!-- <main class="flex flex-1 bg-blue-300 overflow-y-auto paragraph px-4"> -->
+            <!-- <main class="flex flex-1 overflow-y-scroll overflow-hidden paragraph p-4"> -->
+                <main class="flex flex-1 scrollbar-hide overflow-y-scroll paragraph p-4">
+                {% block content %}
+                {% endblock content %}
+            </main>
+        </div>
+        <!-- {% block footer %}
+            {% include "footer.html" %}
+        {% endblock footer %} -->
+        <!-- <div class="flex bg-yellow-300">Footer</div> -->
+    </div>
+
+
+    {% block gamemodal %}
+    {% include "gamemodal.html" %}
+    {% endblock gamemodal %}
+
+    {% comment %} {% block footer %}
+        {% include "footer.html" %}
+    {% endblock footer %} {% endcomment %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+        integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.rawgit.com/kottenator/jquery-circle-progress/1.2.0/dist/circle-progress.js"></script>
+    <script src="{% static 'js/sidebar.js' %}"></script>
+    <script src="{% static 'js/modal.js' %}"></script>
+    <script src="{% static 'js/header.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/flowbite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        {% if messages %}
+            {% for message in messages %}
+            
+            if ("{{message.tags}}" == "success"){
+                    toastr.success("{{message}}");
+                }
+            else if ("{{message.tags}}" == "error"){
+                toastr.error("{{message}}");
+                }
+            else if ("{{message.tags}}" == "info"){
+                toastr.info("{{message}}");
+            }
+            {% endfor %}
+        {% endif %}
+    </script>
+    {% block staticjs %}
+
+    {% endblock staticjs %}
+</body>
+
+</html>

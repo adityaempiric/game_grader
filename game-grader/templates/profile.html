@@ -1,0 +1,276 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Profile{% endblock title %}
+{% block content %}
+<div class="w-2/6">
+    <div class="flex text-white justify-center">
+        <p class="text-2xl">Profile</p>
+    </div>
+    <div class="flex column gap-4 mt-4">
+        <div class="w-full">
+            <div class="justify-center grid grid-cols-3 gap items-center">
+                <div class="flex justify-center">
+                    {% csrf_token %}
+                    <label for="user-coverpic"class="bg-gray-500 rounded-full text-white w-20 h-20">
+                        <i class="fa fa-camera absolute pt-8 pl-8"></i>
+                    </label>
+                    <!-- <input type="file" accept="image/png" class="absolute cursor-pointer opacity-0" /> -->
+                    <input id="user-coverpic" type="file" class="absolute cursor-pointer opacity-0" accept="image/png, image/jpeg ,image/jpg">
+                </div>
+                
+                <div class="flex justify-center">
+                {% if user.coverpic %}
+                    <img src="{{ user.coverpic.url }}" alt="Profile img" class="w-40 h-40 rounded-full object-cover" id="user-cover-pic-profile">
+                {% else %}
+                <div id="profile_img" class="bg-blue-600 w-40 h-40 rounded-full object-cover text-center p-12 text-white text-5xl" >
+                </div> 
+                     {% comment %} <p src="{% static 'img/Profile-Male-PNG.png' %}" alt="Profile img" class="w-40 h-40 rounded-full object-cover" id="user-cover-pic-profile">  {% endcomment %}
+                {% endif %}
+                </div>
+                <div class="flex justify-center">
+                    <button class="bg-gray-500 rounded-full w-20 h-20">
+                        <i class="fa fa-arrow-right-from-bracket text-white"></i>
+                    </button>
+                </div>
+            </div>
+            <ul class="mt-4">
+                <li class="border-solid border rounded my-2 p-2 hover:bg-gray-600">
+                    <div class="grid grid-cols-10 gap p-2">  
+                        <div class="flex items-center text-white">
+                            <!-- <i class="fa fa-arrow-right-from-bracket text-white"></i> -->
+                            <i class="fa-regular fa-user text-2xl"></i>
+                        </div>
+                        <div class="flex justify-start col-span-7 ml-4">
+                                <div>
+                                    <p class="text-gray-500">FIRST NAME</p>
+                                    <p id ="p_f_name"class=" text-white">{{user.first_name}}</p>
+                                    <input id="in_edit_f_name" class="disabled:opacity-50 bg-gray-800 border-b border-gray-300 text-white text-lg rounded-lg p-2" value="{{user.first_name}}"  />
+
+                                </div>
+                            
+                        </div>
+                        <div class="flex items-end text-white">
+                            <button id="edit_f_name_btn" >
+                                <i class="fa-regular fa-pen-to-square text-2xl" id="edit_f_name"></i>
+                            </button>
+                            <div class="flex justify-between w-48">
+                                <button id="discard_f_nm_btn" onclick="discardChangef()" >
+                                    <i class="fa-solid fa-x text-2xl"></i>
+                                </button>
+                                <button id="check"><i class="fa-solid fa-check text-2xl"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-10 gap mt-4 p-2">
+                        <div class="flex items-center text-white">
+                            <!-- <i class="fa fa-arrow-right-from-bracket text-white"></i> -->
+                            <i class="fa-regular fa-user text-2xl"></i>
+                        </div>
+                        <div class="flex justify-start col-span-7 ml-4">
+                            <div>
+                                <p class="text-gray-500">LAST NAME</p>
+                                <p id="p_l_name" class=" text-white">{{user.last_name}}</p>
+                                <input id="in_edit_l_name" class="disabled:opacity-50 bg-slate-800 border-b-2 border-gray-300 text-white text-lg rounded-lg p-2" value="{{user.last_name}}" />
+                            </div>
+                        </div>
+                        <div class="flex items-end text-white">
+                            <button id="edit_l_name_btn">
+                                <i class=" fa-regular fa-pen-to-square text-2xl "></i>
+                            </button>
+                            <div class="flex justify-between w-48">
+                                <button id="discard_l_nm_btn" onclick="discardChangel()" >
+                                    <i class="fa-solid fa-x text-2xl"></i>
+                                </button>
+                                <button id="check2"><i class="fa-solid fa-check text-2xl"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="border-solid border rounded my-2 p-2 hover:bg-gray-600">
+                    <div class="grid grid-cols-10 gap p-2">
+                        <div class="flex items-center text-white">
+                            <!-- <i class="fa fa-arrow-right-from-bracket text-white"></i> -->
+                            <!-- <i class="fa-regular fa-user text-2xl"></i> -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H6.911a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661z" />
+                            </svg>
+                        </div>
+                        <div class="flex justify-start col-span-8 ml-4">
+                            <div>
+                                <p class="text-gray-500">EMAIL</p>
+                                <p class="text-white">{{user.email}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="border-solid border rounded my-2 p-2 hover:bg-gray-600">
+                    <div class="grid grid-cols-10 gap p-2">
+                        <div class="flex items-center text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                            </svg>
+                        </div>
+                        <div class="flex justify-start col-span-8 ml-4">
+                            <div>
+                                <p class="text-gray-500">PASSWORD</p>
+                                <span class="text-white text-3xl">........</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="border-solid border rounded my-2 p-2 hover:bg-gray-600">
+                    <div class="grid grid-cols-10 gap p-2">
+                        <div class="flex items-center text-white">
+                            <!-- <i class="fa fa-arrow-right-from-bracket text-white"></i> -->
+                            <i class="fa fa-map-pin text-2xl"></i>
+                        </div>
+                        <div class="flex justify-start col-span-8 ml-4">
+                            <div>
+                                <p class="text-gray-500">TEAM</p>
+                                {% comment %} <p class="text-white">{{team}}</p> {% endcomment %}
+                                <select id="teams" onchange="send_data()" class="bg-gray-800 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option class="text-white" selected>Select your team</option>
+                                    {% if team %}
+                                        {% for tm in team %}
+                                            {% if user.role == 'Admin' %}
+                                                {% if tm == activeTeam %}
+                                                    <option class="text-white" value="{{tm}}"selected >{{tm.team_name}}</option>
+                                                {% else %}
+                                                    <option class="text-white" value="{{tm}}" >{{tm.team_name}}</option>
+                                                {% endif %} 
+                                            {% else %}
+                                                <option class="text-white" value="{{tm}}" selected>{{tm.team_name}}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    
+                                    
+                                    {% elif actteamname %}
+                                        {% for tm in actteamname %}
+                                            {% if user.role == Admin %}
+                                                {% if  tm == teamname %}
+                                                <option class="text-white" value="{{tm}}"selected >{{tm.teamname}}</option>
+                                                {% else %}
+                                                <option class="text-white" value="{{tm}}" >{{tm.teamname}}</option>
+                                                 {% endif %} 
+                                            {% else %}
+                                                <option class="text-white" value="{{tm}}" selected>{{tm.teamname}}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <option class="text-white" value='' selected>There is no team for you</option>
+                                    {% endif %}   
+
+                                  </select>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block staticjs %}
+<script>    
+    function discardChangel() {
+        document.getElementById("edit_l_name_btn").hidden = false;
+        document.getElementById("in_edit_l_name").hidden = true;
+        document.getElementById("discard_l_nm_btn").hidden = true;
+        document.getElementById("check2").hidden = true;
+        document.getElementById("p_l_name").hidden = false;
+    }
+    function discardChangef(){
+        document.getElementById("edit_f_name_btn").hidden = false;
+        document.getElementById("in_edit_f_name").hidden = true;
+        document.getElementById("discard_f_nm_btn").hidden = true;
+        document.getElementById("check").hidden = true;
+        document.getElementById("p_f_name").hidden = false;
+        
+      }
+
+
+    document.getElementById("in_edit_l_name").hidden = true;
+    document.getElementById("in_edit_f_name").hidden = true;
+    document.getElementById("discard_l_nm_btn").hidden = true;
+    document.getElementById("discard_f_nm_btn").hidden = true;
+    document.getElementById("check").hidden = true;
+    document.getElementById("check2").hidden = true;
+   
+    document.getElementById("edit_l_name_btn").addEventListener('click', () => {
+        document.getElementById("p_l_name").hidden = true
+        document.getElementById("in_edit_l_name").hidden = false;
+        document.getElementById("edit_l_name_btn").hidden = true;
+        document.getElementById("discard_l_nm_btn").hidden = false;
+        document.getElementById("check2").hidden = false;
+        $("#check2").on('click', function(){
+            $lastname =$("#in_edit_l_name").val()
+            $.ajax({
+               
+                type:'POST',
+                url:'/profile/',
+                data:{
+                    lastname: $lastname,
+                    },
+                success: function(){
+                    document.getElementById("p_l_name").hidden = false;
+                    $('#p_l_name').html($lastname);
+                }
+            });
+            document.getElementById("in_edit_l_name").hidden = true;
+            document.getElementById("p_l_name").hidden = false;
+            document.getElementById("discard_l_nm_btn").hidden = true;
+            document.getElementById("check2").hidden = true;
+            document.getElementById("edit_l_name_btn").hidden = false;
+           
+        });
+      });
+    document.getElementById("edit_f_name_btn").addEventListener('click', () => {
+        document.getElementById("p_f_name").hidden = true;
+        document.getElementById("in_edit_f_name").hidden = false;
+        document.getElementById("edit_f_name_btn").hidden = true;
+        document.getElementById("discard_f_nm_btn").hidden = false;
+        document.getElementById("check").hidden = false;
+        var lastname = $("#in_edit_f_name").val();
+        $("#check").on('click', function(){
+            $firstname =$("#in_edit_f_name").val()
+            $.ajax({
+               
+                type:'POST',
+                url:'/profile/',
+                data:{
+                    firstname: $firstname,
+                    },
+                success: function(){
+                    document.getElementById("p_f_name").hidden = false;
+                    $('#p_f_name').html($firstname);
+                }
+            });
+            document.getElementById("in_edit_f_name").hidden = true;
+            document.getElementById("in_edit_f_name").hidden = true;
+            document.getElementById("p_f_name").hidden = false;
+            document.getElementById("discard_f_nm_btn").hidden = true;
+            document.getElementById("check").hidden = true;
+            document.getElementById("edit_f_name_btn").hidden = false;
+           
+        });
+    });
+    
+    function send_data(e){
+        var value = document.getElementById("teams").value;
+
+        console.log(value)
+
+        data = {
+                "team":value,
+        }
+        $.post("/profile/",data);
+    
+    }
+</script>
+ <script src="{% static 'js/profile.js' %}"></script>
+ <script src="{% static 'js/modal.js' %}"></script>
+{% endblock staticjs %}
